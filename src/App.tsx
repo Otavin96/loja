@@ -1,7 +1,7 @@
 import "./App.css";
-import { CardItem } from "./componets/CardItem";
-import { Navbar } from "./componets/Navbar";
-import { Pagination } from "./componets/Pagination";
+import CardItem from "./componets/CardItem";
+import Navbar from "./componets/Navbar";
+import Pagination from "./componets/Pagination";
 
 function App() {
   return (

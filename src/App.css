@@ -1,1 +1,6 @@
 @import "tailwindcss";
+
+:root {
+    --color-green-base: #52A350;
+    --font-sans: "Inter", sans-serif;
+}
