@@ -1,19 +1,19 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { api } from "../helpers/api";
-import type { Product } from "../models/Product/product-model";
 
-async function postProduct(data: Product): Promise<void> {
+async function postProduct(data: FormData): Promise<void> {
   try {
     await api.post("/product", data);
   } catch (error) {
     console.error(error);
+    throw error;
   }
 }
 
 export function usePostProduct() {
   const queryClient = useQueryClient();
 
-  return useMutation({
+  return useMutation<void, unknown, FormData>({
     mutationFn: postProduct,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["products"] });

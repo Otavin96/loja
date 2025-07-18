@@ -1,3 +1,5 @@
+import type { Category } from "../Category/category-model";
+
 export interface ProductResponse {
   items: Product[];
   total: number;
@@ -9,9 +11,10 @@ export interface ProductResponse {
 export interface Product {
   id: string;
   name: string;
-  sku: string;
   description: string;
   price: number;
   quantity: number;
-  images: string[];
+  category_id: string;
+  images: FileList; // ou File[]
 }
+
