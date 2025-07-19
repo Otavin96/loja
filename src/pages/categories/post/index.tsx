@@ -5,6 +5,7 @@ import Input from "../../../componets/Input";
 import type { Category } from "../../../models/Category/category-model";
 import { usePostCategory } from "../../../hooks/usePostCategory";
 import Alert from "../../../componets/Alert";
+import NavLink from "../../../componets/NavLink";
 
 export default function PostCategory() {
   const {
@@ -18,17 +19,19 @@ export default function PostCategory() {
 
   const handlePostCategory: SubmitHandler<Category> = (data) => {
     mutate(data);
-    setValue("name", "")
-    setValue("description", "")
+    setValue("name", "");
+    setValue("description", "");
   };
 
   return (
     <div className="flex flex-col w-full h-screen justify-center items-center">
-      {
-        isSuccess && <Alert className="flex w-96 h-16 rounded-md justify-center items-center bg-green-700">
-         <p className="font-bold text-gray-200 uppercase">Categoria cadastrada com sucesso!</p>
+      {isSuccess && (
+        <Alert className="flex w-96 h-16 rounded-md justify-center items-center bg-green-700">
+          <p className="font-bold text-gray-200 uppercase">
+            Categoria cadastrada com sucesso!
+          </p>
         </Alert>
-      }
+      )}
       <Form
         onSubmit={handleSubmit(handlePostCategory)}
         className="flex flex-col w-96 gap-4 items-center px-6 py-6"

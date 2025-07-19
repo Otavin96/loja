@@ -7,6 +7,8 @@ import Select from "../../../componets/Select";
 import { useFecthCategories } from "../../../hooks/useFecthCategories";
 import { usePostProduct } from "../../../hooks/usePostProduct";
 import type { Product } from "../../../models/Product/product-model";
+import NavLink from "../../../componets/NavLink";
+import Alert from "../../../componets/Alert";
 
 export default function PostProduct() {
   const {
@@ -47,7 +49,15 @@ export default function PostProduct() {
   const { data: categories } = useFecthCategories();
 
   return (
-    <div className="flex w-full h-screen justify-center items-center">
+    <div className="flex flex-col w-full h-screen justify-center items-center">
+      {isSuccess && (
+        <Alert className="flex w-96 h-16 rounded-md justify-center items-center bg-green-700">
+          <p className="font-bold text-gray-200 uppercase">
+            Produto cadastrado com sucesso!
+          </p>
+        </Alert>
+      )}
+
       <Form
         onSubmit={handleSubmit(handlePostProduct)}
         className="flex flex-col w-96 gap-4 items-center px-6 py-6"
