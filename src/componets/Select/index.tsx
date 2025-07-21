@@ -3,10 +3,11 @@ import type { Category } from "../../models/Category/category-model";
 
 interface SelectProps extends React.ComponentProps<"select"> {
   label?: string;
+  error?: string;
   data: Category[] | undefined;
 }
 
-export default function Select({ label, data, ...props }: SelectProps) {
+export default function Select({ label, error, data, ...props }: SelectProps) {
   return (
     <div className="flex flex-col font w-full gap-0.5">
       <label className="font-extralight text-sm" htmlFor="">
@@ -26,6 +27,7 @@ export default function Select({ label, data, ...props }: SelectProps) {
           </option>
         ))}
       </select>
+      <p className="font-extralight text-sm text-red-600">{error}</p>
     </div>
   );
 }

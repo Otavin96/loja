@@ -1,12 +1,7 @@
-import { Outlet } from "react-router-dom";
-import NavLink from "../../componets/NavLink";
-
-
-export default function LayoutAdmin() {
-  return (
-    <>
-      <NavLink />
-      <Outlet />
-    </>
-  );
+export default function Home() {
+    return(
+        <div>
+            <h2>HOME</h2>
+        </div>
+    )
 }

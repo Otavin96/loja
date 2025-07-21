@@ -5,7 +5,6 @@ import Input from "../../../componets/Input";
 import type { Category } from "../../../models/Category/category-model";
 import { usePostCategory } from "../../../hooks/usePostCategory";
 import Alert from "../../../componets/Alert";
-import NavLink from "../../../componets/NavLink";
 
 export default function PostCategory() {
   const {
@@ -24,7 +23,7 @@ export default function PostCategory() {
   };
 
   return (
-    <div className="flex flex-col w-full h-screen justify-center items-center">
+    <>
       {isSuccess && (
         <Alert className="flex w-96 h-16 rounded-md justify-center items-center bg-green-700">
           <p className="font-bold text-gray-200 uppercase">
@@ -49,11 +48,11 @@ export default function PostCategory() {
         />
         <Button
           type="submit"
-          className="w-36 h-8 rounded-md text-white font-bold bg-blue-600 cursor-pointer"
+          className="w-36 h-8 rounded-md text-white font-bold bg-blue-700 cursor-pointer hover:opacity-90"
         >
           Cadastrar
         </Button>
       </Form>
-    </div>
+    </>
   );
 }

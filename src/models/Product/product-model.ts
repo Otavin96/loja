@@ -1,6 +1,7 @@
-import type { Category } from "../Category/category-model";
+import * as zod from "zod/v3"
+import type { productFormZodSchema } from "../../pages/product/post/productFormZodSchema";
 
-export interface ProductResponse {
+export type ProductResponse = {
   items: Product[];
   total: number;
   current_page: number;
@@ -8,13 +9,4 @@ export interface ProductResponse {
   last_page: number;
 }
 
-export interface Product {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  quantity: number;
-  category_id: string;
-  images: FileList; // ou File[]
-}
-
+export type Product = zod.infer<typeof productFormZodSchema>

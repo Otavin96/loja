@@ -2,11 +2,12 @@ import type React from "react";
 
 interface InputProps extends React.ComponentProps<"input"> {
   label: string;
+  error?: string;
 }
 
-export default function Input({ label, ...props }: InputProps) {
+export default function Input({ label, error, ...props }: InputProps) {
   return (
-    <div className="flex flex-col font w-full gap-0.5">
+    <div className="flex flex-col w-full gap-0.5">
       <label className="font-extralight text-sm" htmlFor="">
         {label}
       </label>
@@ -20,6 +21,7 @@ export default function Input({ label, ...props }: InputProps) {
                 `}
         {...props}
       />
+      <p className="font-extralight text-sm text-red-600">{error}</p>
     </div>
   );
 }
