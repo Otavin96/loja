@@ -7,12 +7,15 @@ export default function NavLink() {
   const menuRef = React.useRef(null);
 
   React.useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (menuRef.current && !menuRef.current.contains(event.target)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        menuRef.current &&
+        (menuRef.current as HTMLElement).contains &&
+        !(menuRef.current as HTMLElement).contains(event.target as Node)
+      ) {
         setOpenDropdown(null);
       }
     };
-
     document.addEventListener("click", handleClickOutside);
     return () => {
       document.removeEventListener("click", handleClickOutside);
@@ -22,37 +25,47 @@ export default function NavLink() {
   return (
     <ul
       ref={menuRef}
-      className="flex flex-row h-16 justify-center items-center gap-4 shadow-md"
+      className="flex flex-row h-16 justify-center items-center gap-6 bg-white text-blue-800 font-medium px-8 border-b border-gray-200"
     >
-      <CustomLink to="/">Catálogo</CustomLink>
+      <CustomLink
+        to="/"
+        className="px-2 py-1 hover:text-blue-600 hover:border-blue-400 focus:outline-none duration-150"
+      >
+        Catálogo
+      </CustomLink>
 
-      <CustomLink to="/admin/home">Home</CustomLink>
+      <CustomLink
+        to="/admin/home"
+        className="px-2 py-1 hover:text-blue-600 hover:border-blue-400 focus:outline-none duration-150"
+      >
+        Home
+      </CustomLink>
 
       <DropDown text="Produto" state={{ openDropdown, setOpenDropdown }}>
         <CustomLink
-          className="border-b-2 border-blue-400"
           to="admin/cadastrar/produto"
+          className="px-2 py-1 text-blue-800 hover:text-blue-600 hover:border-blue-400 focus:outline-none duration-150"
         >
           Cadastrar
         </CustomLink>
         <CustomLink
-          className="border-b-2 border-blue-400"
           to="admin/listar/produtos"
+          className="px-2 py-1 text-blue-800 hover:text-blue-600 hover:border-blue-400 focus:outline-none duration-150"
         >
-          Listrar
+          Listar
         </CustomLink>
       </DropDown>
 
       <DropDown text="Categoria" state={{ openDropdown, setOpenDropdown }}>
         <CustomLink
-          className="border-b-2 border-blue-400"
           to="admin/cadastrar/categoria"
+          className="px-2 py-1 text-blue-800 hover:text-blue-600 hover:border-blue-400 focus:outline-none duration-150"
         >
           Cadastrar
         </CustomLink>
         <CustomLink
-          className="border-b-2 border-blue-400"
           to="admin/listar/categorias"
+          className="px-2 py-1 text-blue-800 hover:text-blue-600 hover:border-blue-400 focus:outline-none duration-150"
         >
           Listar
         </CustomLink>

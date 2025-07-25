@@ -1,5 +1,5 @@
 import * as zod from "zod/v3"
-import type { productFormZodSchema } from "../../pages/product/post/productFormZodSchema";
+import type { categoryFormZodSchema } from "../../pages/categories/post/categoryFormZodSchema";
 
 export type ProductResponse = {
   items: Product[];
@@ -9,4 +9,14 @@ export type ProductResponse = {
   last_page: number;
 }
 
-export type Product = zod.infer<typeof productFormZodSchema>
+// export type Product = zod.infer<typeof productFormZodSchema>
+
+export type Product = {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  quantity?: number;
+  category_id: zod.infer<typeof categoryFormZodSchema>;
+  images?: FileList; // Assuming images are optional and can be a FileList
+};

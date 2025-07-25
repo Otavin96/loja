@@ -8,20 +8,20 @@ import { useFecthCategories } from "../../../hooks/useFecthCategories";
 import { usePostProduct } from "../../../hooks/usePostProduct";
 import type { Product } from "../../../models/Product/product-model";
 import Alert from "../../../componets/Alert";
-import { useProductFormZodSchema } from "./productFormZodSchema";
+import { useProductFormZodSchema } from "../post/productFormZodSchema";
+import { useParams } from "react-router-dom";
 
-export default function PostProduct() {
+export default function EditProduct() {
+  const { id } = useParams();
   const { mutate, isSuccess } = usePostProduct();
 
+  console.log("ID do produto:", id);
   const {
     handleSubmit,
     register,
     setValue,
     formState: { errors },
   } = useProductFormZodSchema();
-
-
-  console.log(errors)
 
   // Registrar manualmente o campo "images"
   useEffect(() => {
@@ -58,7 +58,7 @@ export default function PostProduct() {
       {isSuccess && (
         <Alert className="flex w-96 h-16 rounded-md justify-center items-center bg-green-700">
           <p className="font-bold text-gray-200 uppercase">
-            Produto cadastrado com sucesso!
+            Produto editado com sucesso!
           </p>
         </Alert>
       )}
@@ -67,7 +67,7 @@ export default function PostProduct() {
         onSubmit={handleSubmit(handlePostProduct)}
         className="flex flex-col w-96 gap-4 items-center px-6 py-6"
       >
-        <h2 className="text-xl">Cadastrar Produto</h2>
+        <h2 className="text-xl">Editar Produto</h2>
 
         <Input
           {...register("name", { required: true })}
@@ -87,7 +87,9 @@ export default function PostProduct() {
             {...register("description", { required: true })}
             placeholder="Digite uma descrição..."
           ></textarea>
-          <p className="font-extralight text-sm text-red-600">{errors.description?.message}</p>
+          <p className="font-extralight text-sm text-red-600">
+            {errors.description?.message}
+          </p>
         </div>
 
         <Input
@@ -127,13 +129,15 @@ export default function PostProduct() {
             className="w-full border px-2 py-1 mt-1"
           />
         </label>
-        <p className="font-extralight text-sm text-red-600">{errors.images?.message}</p>
+        <p className="font-extralight text-sm text-red-600">
+          {errors.images?.message}
+        </p>
 
         <Button
           type="submit"
           className="w-36 h-8 rounded-md text-white font-bold bg-blue-700 cursor-pointer hover:opacity-90"
         >
-          Cadastrar
+          Editar
         </Button>
       </Form>
     </>

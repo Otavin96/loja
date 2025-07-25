@@ -1,13 +1,16 @@
-import { useForm, type SubmitHandler } from "react-hook-form";
+import { type SubmitHandler } from "react-hook-form";
 import Button from "../../../componets/Button";
 import Form from "../../../componets/Form";
 import Input from "../../../componets/Input";
 import type { Category } from "../../../models/Category/category-model";
-import { usePostCategory } from "../../../hooks/usePostCategory";
 import Alert from "../../../componets/Alert";
 import { useCatrgoryFormZodSchema } from "./categoryFormZodSchema";
+import React from "react";
+import { useGetCategoryById } from "../../../hooks/useGetCategoryById";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEditCategory } from "../../../hooks/useEditCategory";
 
-export default function PostCategory() {
+export default function EditCategory() {
   const {
     handleSubmit,
     register,
@@ -15,14 +18,22 @@ export default function PostCategory() {
     formState: { errors },
   } = useCatrgoryFormZodSchema();
 
-  
+  const params = useParams();
+  const { mutate, isSuccess } = useEditCategory();
+  const { data: category } = useGetCategoryById(params.id || "");
+  const nav = useNavigate();
 
-  const { mutate, isSuccess } = usePostCategory();
+  React.useEffect(() => {
+    setValue("name", category?.name || "");
+    setValue("description", category?.description || "");
+  }, [category, setValue]);
 
-  const handlePostCategory: SubmitHandler<Category> = (data) => {
+  const handleEditCategory: SubmitHandler<Category> = (data) => {
+    data.id = category?.id || "";
     mutate(data);
     setValue("name", "");
     setValue("description", "");
+    nav("/admin/listar/categorias");
   };
 
   return (
@@ -30,15 +41,15 @@ export default function PostCategory() {
       {isSuccess && (
         <Alert className="flex w-96 h-16 rounded-md justify-center items-center bg-green-700">
           <p className="font-bold text-gray-200 uppercase">
-            Categoria cadastrada com sucesso!
+            Categoria Editada com sucesso!
           </p>
         </Alert>
       )}
       <Form
-        onSubmit={handleSubmit(handlePostCategory)}
+        onSubmit={handleSubmit(handleEditCategory)}
         className="flex flex-col w-96 gap-4 items-center px-6 py-6"
       >
-        <h2 className="text-xl">Cadastrar Categoria</h2>
+        <h2 className="text-xl">Editar Categoria</h2>
         <Input
           label="Nome: "
           {...register("name")}
@@ -55,7 +66,7 @@ export default function PostCategory() {
           type="submit"
           className="w-36 h-8 rounded-md text-white font-bold bg-blue-700 cursor-pointer hover:opacity-90"
         >
-          Cadastrar
+          Editar
         </Button>
       </Form>
     </>
