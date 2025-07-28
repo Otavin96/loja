@@ -14,7 +14,7 @@ export default function Item({ product }: ItemProps) {
         src={`http://localhost:3000${product.images[0]}`}
         alt=""
       />
-      <p>Descrição: {product.description}</p>
+      <p className="overflow-hidden text-clip">Descrição: {product.description}</p>
       <p>Preço: {product.price}</p>
       <Button
         type="button"

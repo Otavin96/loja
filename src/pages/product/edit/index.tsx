@@ -1,24 +1,27 @@
 import { type SubmitHandler } from "react-hook-form";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import Button from "../../../componets/Button";
 import Form from "../../../componets/Form";
 import Input from "../../../componets/Input";
 import Select from "../../../componets/Select";
 import { useFecthCategories } from "../../../hooks/useFecthCategories";
-import { usePostProduct } from "../../../hooks/usePostProduct";
-import type { Product } from "../../../models/Product/product-model";
 import Alert from "../../../componets/Alert";
 import { useProductFormZodSchema } from "../post/productFormZodSchema";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useGetProductById } from "../../../hooks/useGetProductById";
+import type { Product } from "../../../models/Product/product-model";
+import { useEditProduct } from "../../../hooks/useEditProduct";
 
 export default function EditProduct() {
   const { id } = useParams();
-  const { mutate, isSuccess } = usePostProduct();
+  const { data: product } = useGetProductById(id || undefined);
+  const { mutate, isSuccess } = useEditProduct();
+  const { data: categories } = useFecthCategories();
+  const nav = useNavigate();
 
-  console.log("ID do produto:", id);
   const {
-    handleSubmit,
     register,
+    handleSubmit,
     setValue,
     formState: { errors },
   } = useProductFormZodSchema();
@@ -28,8 +31,17 @@ export default function EditProduct() {
     register("images", { required: true });
   }, [register]);
 
-  const handlePostProduct: SubmitHandler<Product> = (data) => {
+  React.useEffect(() => {
+    setValue("name", product?.name || "");
+    setValue("description", product?.description || "");
+    setValue("price", product?.price || 0);
+    setValue("quantity", product?.quantity || 0);
+    setValue("category_id", product?.category_id.name || "");
+  }, [product, setValue]);
+
+  const handleEditProduct: SubmitHandler<Product> = (data) => {
     const formData = new FormData();
+    formData.append("id", id as string);
     formData.append("name", data.name);
     formData.append("description", data.description);
     formData.append("price", String(data.price));
@@ -49,9 +61,8 @@ export default function EditProduct() {
     setValue("price", 0);
     setValue("quantity", 0);
     setValue("category_id", "");
+    nav("/admin/listar/produtos");
   };
-
-  const { data: categories } = useFecthCategories();
 
   return (
     <>
@@ -64,7 +75,7 @@ export default function EditProduct() {
       )}
 
       <Form
-        onSubmit={handleSubmit(handlePostProduct)}
+        onSubmit={handleSubmit(handleEditProduct)}
         className="flex flex-col w-96 gap-4 items-center px-6 py-6"
       >
         <h2 className="text-xl">Editar Produto</h2>
@@ -110,6 +121,8 @@ export default function EditProduct() {
 
         <Select
           {...register("category_id", { required: true })}
+          selectedCategory={true}
+          selectedNameCategory={product?.category_id.name}
           label="Categorias: "
           data={categories}
           error={errors.category_id?.message}

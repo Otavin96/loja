@@ -4,11 +4,11 @@ import Form from "../../../componets/Form";
 import Input from "../../../componets/Input";
 import type { Category } from "../../../models/Category/category-model";
 import Alert from "../../../componets/Alert";
-import { useCatrgoryFormZodSchema } from "./categoryFormZodSchema";
 import React from "react";
 import { useGetCategoryById } from "../../../hooks/useGetCategoryById";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEditCategory } from "../../../hooks/useEditCategory";
+import { useCatrgoryFormZodSchema } from "../post/categoryFormZodSchema";
 
 export default function EditCategory() {
   const {

@@ -8,7 +8,7 @@ export const productFormZodSchema = z.object({
   price: z
     .coerce.number({ invalid_type_error: "Preço inválido" })
     .positive("Preço deve ser positivo"),
-  quantity: z.number({ invalid_type_error: "Precisa ser um numero" }).nonnegative("Quantidade inválida").optional(),
+  quantity: z.number({ invalid_type_error: "Precisa ser um numero" }).nonnegative("Quantidade inválida"),
   category_id: z.string().min(1, "Categoria é obrigatória"),
 
   // Validação de imagens usando custom
@@ -17,7 +17,7 @@ export const productFormZodSchema = z.object({
     {
       message: "Pelo menos uma imagem é obrigatória",
     }
-  ),
+  ).optional(),
 });
 
 export const useProductFormZodSchema = () => {

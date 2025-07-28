@@ -4,10 +4,10 @@ import type { Product } from "../models/Product/product-model";
 
 
 
-export async function getProductById(productId: string): Promise<Product | undefined> {
+export async function getProductById(productId: string | undefined): Promise<Product | undefined> {
     try {
         
-        const response = await api.get(`/products/${productId}`);
+        const response = await api.get(`/product/${productId}`);
         return response.data;
 
     } catch (error) {
@@ -15,7 +15,7 @@ export async function getProductById(productId: string): Promise<Product | undef
     }
 }
 
-export function useGetProductById(id: string) {
+export function useGetProductById(id: string | undefined) {
     
     return useQuery({
         queryKey: ["product"],

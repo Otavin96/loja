@@ -5,9 +5,18 @@ interface SelectProps extends React.ComponentProps<"select"> {
   label?: string;
   error?: string;
   data: Category[] | undefined;
+  selectedCategory?: boolean;
+  selectedNameCategory?: string;
 }
 
-export default function Select({ label, error, data, ...props }: SelectProps) {
+export default function Select({
+  label,
+  error,
+  data,
+  selectedCategory,
+  selectedNameCategory,
+  ...props
+}: SelectProps) {
   return (
     <div className="flex flex-col font w-full gap-0.5">
       <label className="font-extralight text-sm" htmlFor="">
@@ -22,8 +31,10 @@ export default function Select({ label, error, data, ...props }: SelectProps) {
         {...props}
       >
         {data?.map((item, index) => (
-          <option key={index} value={item.id}>
-            {item.name}
+          <option key={index} value={item.id} selected={selectedCategory}>
+            {selectedNameCategory === item.name
+              ? selectedNameCategory
+              : item.name}
           </option>
         ))}
       </select>

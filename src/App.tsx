@@ -17,7 +17,7 @@ function App() {
   }
 
   return (
-    <div className="flex flex-col w-full items-center">
+    <div className="flex flex-col h-screen w-full items-center bg-[#303030]">
       <Navbar />
       <div className="grid grid-cols-5 gap-4 justify-center my-20 px-10">
         {products?.items.length === 0 ? (
@@ -26,7 +26,7 @@ function App() {
           </div>
         ) : (
           products?.items.map((product) => (
-            <Card className="flex flex-col items-center gap-4 outline outline-offset-2 outline-zinc-700 rounded-md shadow-xl py-4">
+            <Card className="flex flex-col items-center gap-4 outline outline-offset-2 bg-white rounded-md shadow-xl p-4">
               <Item key={product.id} product={product} />
             </Card>
           ))
